@@ -16,6 +16,7 @@ import univ.lecture.riotapi.Calculator;
 import univ.lecture.riotapi.model.Summoner;
 import java.io.UnsupportedEncodingException;
 import java.util.Map;
+import com.google.gson.Gson;
 
 /**
  * Created by tchi on 2017. 4. 1..
@@ -52,7 +53,8 @@ public class RiotApiController {
         double result = cal.calculate(summonerName);
         Summoner summoner = new Summoner(queriedName, queriedLevel,result);
         
-        
+        Gson gson = new Gson();
+        gson.toJson(summoner);
         return summoner;
     }
 }
