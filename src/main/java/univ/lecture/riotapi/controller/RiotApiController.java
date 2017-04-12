@@ -12,10 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
-
 import univ.lecture.riotapi.Calculator;
 import univ.lecture.riotapi.model.Summoner;
-import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
