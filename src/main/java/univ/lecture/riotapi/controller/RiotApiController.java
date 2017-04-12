@@ -60,11 +60,11 @@ public class RiotApiController {
 //    }
     	
     @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public Team10 queryTeam10(@RequestParam(value="exp")String exp){
+    public @ResponseBody Team10 queryTeam10(@RequestParam(value="exp")String exp){
     	
     	Calculator cal = new Calculator();
-    	long now = System.currentTimeMillis();
     	double result = cal.calculate(exp);
+    	long now = System.currentTimeMillis();
     	Team10 team10 = new Team10(10,now,result);
     	
     	return team10;
