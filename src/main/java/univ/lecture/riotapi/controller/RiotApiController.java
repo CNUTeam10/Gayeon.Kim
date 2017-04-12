@@ -22,7 +22,7 @@ import com.google.gson.Gson;
  * Created by tchi on 2017. 4. 1..
  */
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/calc")
 @Log4j
 public class RiotApiController {
     @Autowired
@@ -34,7 +34,7 @@ public class RiotApiController {
     @Value("${riot.api.key}")
     private String riotApiKey;
 
-    @RequestMapping(value = "calc/{name}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/{name}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public @ResponseBody Summoner querySummoner(@RequestBody @PathVariable("name") String summonerName) throws UnsupportedEncodingException {//ResposeBody를 사용하여 해당 메소드의 리턴값을 http응답 데이터로 사용
         final String url = riotApiEndpoint + "/summoner/by-name/" +
                 summonerName +
@@ -49,9 +49,10 @@ public class RiotApiController {
         Map<String, Object> summonerDetail = (Map<String, Object>) parsedMap.values().toArray()[0];
         String queriedName = (String)summonerDetail.get("name");
         int queriedLevel = (Integer)summonerDetail.get("summonerLevel");
-        Calculator cal = new Calculator();
-        double result = cal.calculate(summonerName);
-        Summoner summoner = new Summoner(queriedName, queriedLevel,result);
+        
+//        Calculator cal = new Calculator();
+//        double result = cal.calculate(summonerName);
+        Summoner summoner = new Summoner(queriedName, queriedLevel);
         
         Gson gson = new Gson();
         gson.toJson(summoner);
