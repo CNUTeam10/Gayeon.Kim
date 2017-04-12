@@ -14,5 +14,5 @@ import lombok.NoArgsConstructor;
 public class Summoner {
     private int teamId;
     private long now;
-    private double result;
+//    private double result;
 }
