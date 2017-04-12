@@ -1,6 +1,9 @@
 package univ.lecture.riotapi.controller;
 
+import com.google.gson.JsonObject;
 import lombok.extern.log4j.Log4j;
+
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.json.JacksonJsonParser;
@@ -13,10 +16,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+import springfox.documentation.spring.web.json.Json;
 import univ.lecture.riotapi.Calculator;
 import univ.lecture.riotapi.model.Team10;
-import java.io.UnsupportedEncodingException;
-import java.util.Map;
+//import java.io.UnsupportedEncodingException;
+//import java.util.ArrayList;
+//import java.util.Date;
+//import java.util.HashMap;
+//import java.util.Map;
 
 
 /**
@@ -35,38 +42,44 @@ public class RiotApiController {
     @Value("${riot.api.key}")
     private String riotApiKey;
 
-//    @RequestMapping(value = "/{name}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-//    public @ResponseBody Summoner querySummoner(@RequestBody @PathVariable("name") String summonerName) throws UnsupportedEncodingException {//ResposeBody를 사용하여 해당 메소드의 리턴값을 http응답 데이터로 사용
-//        final String url = riotApiEndpoint + "/summoner/by-name/" +
-//                summonerName +
-//                "?api_key=" +
-//                riotApiKey;
-//
-//        String response = restTemplate.getForObject(url, String.class);
-//        Map<String, Object> parsedMap = new JacksonJsonParser().parseMap(response);
-//
-//        parsedMap.forEach((key, value) -> log.info(String.format("key [%s] type [%s] value [%s]", key, value.getClass(), value)));
-//
-//        Map<String, Object> summonerDetail = (Map<String, Object>) parsedMap.values().toArray()[0];
-//        String queriedName = (String)summonerDetail.get("name");
-//        int queriedLevel = (Integer)summonerDetail.get("summonerLevel");
-//        
-////        Calculator cal = new Calculator();
-////        double result = cal.calculate(summonerName);
-//        Summoner summoner = new Summoner(queriedName, queriedLevel);
-//        
-//        
-//        return summoner;
-//    }
-    	
+    Logger log = Logger.getLogger(this.getClass());
+
     @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public @ResponseBody Team10 queryTeam10(@RequestParam(value="exp")String exp){
-    	
+
     	Calculator cal = new Calculator();
     	double result = cal.calculate(cal.postfix(exp));
     	long now = System.currentTimeMillis();
     	Team10 team10 = new Team10(10,now,result);
-    	
+    	log.debug("interrupt");
+
     	return team10;
     }
+
+    
+
+//    @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+//    public @ResponseBody Map<String, Object> getJsonByMap() {
+//    	Map<String, Object> jsonObject = new HashMap<String, Object>();
+//    	Map<String, Object> jsonSubObject = null;
+//    	ArrayList<Map<String,Object>> jsonList = new ArrayList<Map<String,Object>>();
+//
+//    	jsonSubObject = new HashMap<String, Object>();
+//        jsonSubObject.put("idx", 1);
+//        jsonSubObject.put("title", "제목입니다");
+//        jsonSubObject.put("create_date", new Date());
+//        jsonList.add(jsonSubObject);
+//        //2번째 데이터
+//        jsonSubObject = new HashMap<String, Object>();
+//        jsonSubObject.put("idx", 2);
+//        jsonSubObject.put("title", "두번째제목입니다");
+//        jsonSubObject.put("create_date", new Date());
+//        jsonList.add(jsonSubObject);
+//
+//        jsonObject.put("success", true);
+//        jsonObject.put("total_count", 10);
+//        jsonObject.put("result_list", jsonList);
+//
+//        return jsonObject;
+//    }
 }
