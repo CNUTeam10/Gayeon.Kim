@@ -63,7 +63,7 @@ public class RiotApiController {
     public @ResponseBody Team10 queryTeam10(@RequestParam(value="exp")String exp){
     	
     	Calculator cal = new Calculator();
-    	double result = cal.calculate(exp);
+    	double result = cal.calculate(cal.postfix(exp));
     	long now = System.currentTimeMillis();
     	Team10 team10 = new Team10(10,now,result);
     	
