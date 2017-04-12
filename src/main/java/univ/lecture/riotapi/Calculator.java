@@ -4,11 +4,12 @@ import java.util.Stack;
  * Created by tchi on 2017. 3. 19..
  */
 public class Calculator {
-	public int calculate(String exp) {
+	
+	public double calculate(String exp) {
 		return calculator(exp);
 	}
 
-	public int calculator(String postfix){
+	public double calculator(String postfix){
 		double a, b;
 		String temp = new String();
 		Stack stack = new Stack();
@@ -61,7 +62,7 @@ public class Calculator {
 
 			}
 		}
-		return (int) stack.pop();
+		return (double) stack.pop();
 	}
 	
 	public int precedence(char c) // 연산자의 우선순위를 반환
