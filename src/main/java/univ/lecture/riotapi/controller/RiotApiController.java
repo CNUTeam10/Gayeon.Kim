@@ -50,7 +50,7 @@ public class RiotApiController {
         double result;
         
         Calculator calculator = new Calculator();
-        result = calculator.calculate(exp);
+        result = calculator.calculate(calculator.postfix(exp));
         
         Map<String, Object> cal = new HashMap<String, Object>();
         cal.put("teamId", teamId);
