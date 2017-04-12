@@ -1,9 +1,15 @@
 package univ.lecture.riotapi.controller;
 
 import lombok.extern.log4j.Log4j;
+
+import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.json.JacksonJsonParser;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
@@ -37,15 +43,22 @@ public class RiotApiController {
 
     Logger log = Logger.getLogger(this.getClass());
 
-    @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public @ResponseBody Object queryTeam10(@RequestParam(value="exp")String exp){
+    @RequestMapping(method = RequestMethod.POST)
+    public String queryCal(@RequestParam("exp") String exp) throws UnsupportedEncodingException {
+        final int teamId = 10;
+        long now = System.currentTimeMillis();
+        double result;
+        
+        Calculator calculator = new Calculator();
+        result = calculator.calculate(exp);
+        
+        Map<String, Object> cal = new HashMap<String, Object>();
+        cal.put("teamId", teamId);
+        cal.put("now", now);
+        cal.put("result", result);
+        
+        String msg = restTemplate.postForObject(riotApiEndpoint, cal, String.class);
 
-    	Calculator cal = new Calculator();
-    	double result = cal.calculate(cal.postfix(exp));
-    	long now = System.currentTimeMillis();
-    	Team10 team10 = new Team10(10,now,result);
-    	
-    	return team10;
+        return msg;
     }
-    
 }

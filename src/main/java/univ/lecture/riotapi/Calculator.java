@@ -6,6 +6,7 @@ import java.util.Stack;
 public class Calculator {
 	
 	public double calculate(String exp) {
+		postfix(exp);
 		return calculator(exp);
 	}
 
