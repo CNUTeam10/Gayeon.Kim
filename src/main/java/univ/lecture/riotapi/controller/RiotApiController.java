@@ -1,8 +1,6 @@
 package univ.lecture.riotapi.controller;
 
 import lombok.extern.log4j.Log4j;
-
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.json.JacksonJsonParser;
@@ -17,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import univ.lecture.riotapi.Calculator;
 import univ.lecture.riotapi.model.Team10;
-
 import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
