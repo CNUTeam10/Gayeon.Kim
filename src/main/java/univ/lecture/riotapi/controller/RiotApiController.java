@@ -8,7 +8,6 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import univ.lecture.riotapi.Calculator;
-import univ.lecture.riotapi.model.ObjectTeam10;
 import univ.lecture.riotapi.model.Team10;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -45,10 +44,8 @@ public class RiotApiController {
     	double result = cal.calculate(cal.postfix(exp));
     	long now = System.currentTimeMillis();
     	Team10 team10 = new Team10(10,now,result);
-    	ObjectTeam10 objectTeam10 = new ObjectTeam10();
     	
-    	objectTeam10.setMsg("Recorded");
-    	return objectTeam10;
+    	return team10;
     }
     
 }
