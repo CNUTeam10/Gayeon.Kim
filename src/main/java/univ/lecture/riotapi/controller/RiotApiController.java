@@ -6,23 +6,20 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.json.JacksonJsonParser;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
-import univ.lecture.riotapi.Calculator;
 import univ.lecture.riotapi.model.Summoner;
+
 import java.io.UnsupportedEncodingException;
 import java.util.Map;
-import com.google.gson.Gson;
 
 /**
  * Created by tchi on 2017. 4. 1..
  */
 @RestController
-@RequestMapping("/api/v1/calc")
+@RequestMapping("/api/v1")
 @Log4j
 public class RiotApiController {
     @Autowired
@@ -34,8 +31,8 @@ public class RiotApiController {
     @Value("${riot.api.key}")
     private String riotApiKey;
 
-    @RequestMapping(value = "/{name}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public @ResponseBody Summoner querySummoner(@RequestBody @PathVariable("name") String summonerName) throws UnsupportedEncodingException {//ResposeBody를 사용하여 해당 메소드의 리턴값을 http응답 데이터로 사용
+    @RequestMapping(value = "/summoner/{name}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public Summoner querySummoner(@PathVariable("name") String summonerName) throws UnsupportedEncodingException {
         final String url = riotApiEndpoint + "/summoner/by-name/" +
                 summonerName +
                 "?api_key=" +
@@ -49,13 +46,8 @@ public class RiotApiController {
         Map<String, Object> summonerDetail = (Map<String, Object>) parsedMap.values().toArray()[0];
         String queriedName = (String)summonerDetail.get("name");
         int queriedLevel = (Integer)summonerDetail.get("summonerLevel");
-        
-//        Calculator cal = new Calculator();
-//        double result = cal.calculate(summonerName);
         Summoner summoner = new Summoner(queriedName, queriedLevel);
-        
-        Gson gson = new Gson();
-        gson.toJson(summoner);
+
         return summoner;
     }
 }
